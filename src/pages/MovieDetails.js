@@ -10,6 +10,7 @@ class MovieDetails extends Component {
     super();
 
     this.renderCard = this.renderCard.bind(this);
+    this.deleteCard = this.deleteCard.bind(this);
 
     this.state = {
       details: {},
@@ -28,6 +29,12 @@ class MovieDetails extends Component {
     });
   }
 
+  async deleteCard() {
+    const { match: { params: { id } } } = this.props;
+    const { deleteMovie } = movieAPI;
+    await deleteMovie(id);
+  }
+
   renderCard() {
     const { details } = this.state;
     const { id, title, storyline, imagePath, genre, rating, subtitle } = details;
@@ -41,6 +48,7 @@ class MovieDetails extends Component {
         <p>{ `Genre: ${genre}` }</p>
         <p>{ `Rating: ${rating}` }</p>
         <Link to={ `/movies/${id}/edit` }>EDITAR</Link>
+        <Link to="/" onClick={ this.deleteCard }>DELETAR</Link>
         <Link to="/">VOLTAR</Link>
       </div>
     );
